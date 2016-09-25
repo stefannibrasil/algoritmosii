@@ -1,71 +1,85 @@
 //Stéfanni Brasil
-// Trabalho de Algoritmos e Programação II
+//Trabalho de Algoritmos e Programação II
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
+int* read_array (const char*);
+int* copy_array(int*, int);
+void bubbleSort(int*, int);
+void print_array(int*, int);
+
 int main(char* argv) {
-  // lendo arquivo de entrada com 1000 numeros desordenados
-  		FILE *ptr_file;
-  		int tempo_total, tempo_inicio, tempo_final = 0;
+  // Teste  entrada com 1000 numeros desordenados
+  		int* array_desordenado;
+      int* array_aux;
+      double tempo_total, tempo_inicio, tempo_final = 0;
+      int i = 0;
 
-  		ptr_file = fopen("1000.txt", "r");
+      array_desordenado = read_array("1000.txt");
+      array_aux = copy_array(array_desordenado, 1000);
 
-  		if (!ptr_file)
-  			exit(-1);
-  // copiando os dados para outra aray
-      for (i = 0; i < 1000; i++) {
-        array_aux[i] = ptr_file[i];
-      }
       //inicio do relogio
       clock_t start = clock();
-      bubbleSort(1000.txt);
+      bubbleSort(array_aux, 1000);
       clock_t stop = clock();
-      //fechando arquivo após final da ordenação
-      fclose(ptr_file);
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("Tempo executado com BublleSort com 1000 inteiros: %f\n", tempo_total);
+      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
+      array_aux = copy_array(array_desordenado, 1000);
+/*
+      clock_t start = clock();
+      insertion(int array_aux, 1000);
+      clock_t stop = clock();
       double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
-      printf("Tempo executado com BublleSort com 1000 inteiros: %f", tempo_total);
+      printf("Tempo executado com Insertion com 1000 inteiros: %f", tempo_total);
+      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
+      array_aux = copy_array(array_desordenado, 1000);
 
-      tempo_total = 0, tempo_inicio = 0, tempo_final = 0, array_aux = 0;
+      clock_t start = clock();
+      mergeSort(int array_aux, 0, 1000);
+      clock_t stop = clock();
+      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
+      printf("Tempo executado com Merge Sort com 1000 inteiros: %f", tempo_total);
+      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
+      array_aux = copy_array(array_desordenado, 1000);
+
+      clock_t start = clock();
+      quickSort(int array_aux, 0, 1000);
+      clock_t stop = clock();
+      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
+      printf("Tempo executado com quickSort com 1000 inteiros: %f", tempo_total);
+      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
+      array_aux = copy_array(array_desordenado, 1000);
+
+
+      clock_t start = clock();
+      quickIterativo(1000.txt);
+      clock_t stop = clock();
+      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
+      printf("Tempo executado com QuickSort iterativo com 1000 inteiros: %f", tempo_total);
+      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
+      array_aux = copy_array(array_desordenado, 1000);
+
+      clock_t start = clock();
+      shellsort(int array_aux, 1000);
+      clock_t stop = clock();
+      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
+      printf("Tempo executado com shellsort com 1000 inteiros: %f", tempo_total);
+      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
+      array_aux = copy_array(array_desordenado, 1000);
+*/
   		return  0;
   	}
-
-TODO:
-
-// comentar códigos, principalmente merge, quick e shellsort
-// fazer versão iterativa do quicksort
-//de novo...
-
-  // arrayaux = copiar(arraydesordenado)
-  //pegar d1 = data atual
-  //algoritmo2(arrayaux)
-  //pega d2 = data atual
-  // dt-diff = d2-d1
-  //imprimir nome-algoritmo qtde-numeros-entrada dt-diff
-
-  //d1 = null
-  //d2 = null
-  //d3 = null
-  //arrayaux = null
 
   // ... depois de passar por todos os metodos
   // trocar a entrada
 
-  //arraydesordenado = ler outro arquivo de entrada com 1 milhao de numeros desordenados
-  //etc
-
-  // entradas com numeros aleatorios
-  // caso medio
-
   // pode testar tambem com entradas ordenadas
   // entradas invertidas que eh o pior caso.
 
-
-  // chama trabalho1.c arquivo1.txt
-
-}
-
-int bubbleSort(int array[], int n){
+void bubbleSort(int* array, int n){
  	int i, j, swap;
 
    for (i = 1; i < n-1; i++){
@@ -78,7 +92,7 @@ int bubbleSort(int array[], int n){
    		}
 	}
 }
-
+/*
 int insertion(int array[], int n){
   int i, j, x;
   for(j = 1; j < n; j++){
@@ -90,7 +104,7 @@ int insertion(int array[], int n){
   }
 }
 
-int mergeSort(int p, int r, int array[]){
+int mergeSort(int array[], int p, int r){
   if(p < r-1){
     int q = (p + r)/2;
     mergeSort(p, q, array);
@@ -105,7 +119,7 @@ void merge(int p, int q, int r, int array[]){
   i = p; j = q; k = 0;
   while(i < q && j < r){
     if (array[i] <= array[j])
-      w[k++] = array[i++]
+      w[k++] = array[i++];
     else
       w[k++] = array[j++];
   }
@@ -119,7 +133,7 @@ void merge(int p, int q, int r, int array[]){
   free(w);
 }
 
-quickSort(int p, int r, int array[]){
+int quickSort(int *array, int p, int r){
   int j;
   if(p < r){
     j = partition(p, r, array);
@@ -141,7 +155,7 @@ int partition(int p, int r, int array[]){
   }
 }
 
-
+/*
 void shellsort(int array[], int n) {
   const int k = 2;
   int i, j, h;
@@ -152,14 +166,56 @@ void shellsort(int array[], int n) {
   } while (h <= N);
   do
   { h = h / k;
-    for (i = h + 1; i <= N; i++)
-    { x = a[i];
+    for (i = h + 1; i <= N; i++){
+      x = a[i];
       j = i - h;
-      while (j >= 1 && x < a[j])
-      { a[j+h] = a[j];
+      while (j >= 1 && x < a[j]){
+        a[j+h] = a[j];
         j = j - h;
       }
       a[j+h] = x;
     }
   } while (h != 1);
+}
+*/
+
+
+int* read_array (const char* file_name) {
+  FILE* file = fopen (file_name, "r");
+  int i = 0;
+  static int vetor[1000];
+
+  for (i = 0; i < 1000; i++)
+    {
+        fscanf(file, "%d,", &vetor[i]);
+        printf("%d\n", vetor[i]);
+
+    }
+
+  /*fscanf(file, "%d", &i);
+  while (!feof (file) && m < 1000){
+      fscanf(file, "%d", &i);
+      //printf("%d\n", i);
+      vetor[m] = i;
+      m++;
+    }*/
+  fclose (file);
+  return vetor;
+}
+
+int* copy_array(int* from, int n){
+  int i = 0;
+  static int to[1000];
+
+  for(i; i < n; i++){
+    to[i] = from[i];
+  }
+  return to;
+}
+
+void print_array(int* array, int n){
+  int i = 0;
+  for(i; i < n ; i++){
+    printf("%d\n", array[i]);
+  }
 }
