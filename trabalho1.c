@@ -8,6 +8,7 @@
 int* read_array (const char*);
 int* copy_array(int*, int);
 void bubbleSort(int*, int);
+void insertion(int*, int);
 void print_array(int*, int);
 
 int main(char* argv) {
@@ -20,61 +21,32 @@ int main(char* argv) {
       array_desordenado = read_array("1000.txt");
       array_aux = copy_array(array_desordenado, 1000);
 
-      //inicio do relogio
+      printf("algoritmo n tempo(ms)\n");
+
+      //bubbleSort com 1000 inteiros
       clock_t start = clock();
       bubbleSort(array_aux, 1000);
       clock_t stop = clock();
       tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
-      printf("Tempo executado com BublleSort com 1000 inteiros: %f\n", tempo_total);
-      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
-      array_aux = copy_array(array_desordenado, 1000);
-/*
-      clock_t start = clock();
-      insertion(int array_aux, 1000);
-      clock_t stop = clock();
-      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
-      printf("Tempo executado com Insertion com 1000 inteiros: %f", tempo_total);
-      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
-      array_aux = copy_array(array_desordenado, 1000);
-
-      clock_t start = clock();
-      mergeSort(int array_aux, 0, 1000);
-      clock_t stop = clock();
-      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
-      printf("Tempo executado com Merge Sort com 1000 inteiros: %f", tempo_total);
-      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
-      array_aux = copy_array(array_desordenado, 1000);
-
-      clock_t start = clock();
-      quickSort(int array_aux, 0, 1000);
-      clock_t stop = clock();
-      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
-      printf("Tempo executado com quickSort com 1000 inteiros: %f", tempo_total);
-      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
+      printf("bubbleSort  1000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      print_array(array_aux, 1000);
       array_aux = copy_array(array_desordenado, 1000);
 
 
-      clock_t start = clock();
-      quickIterativo(1000.txt);
-      clock_t stop = clock();
-      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
-      printf("Tempo executado com QuickSort iterativo com 1000 inteiros: %f", tempo_total);
-      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
+      //insertion com 1000 inteiros
+      start = clock();
+      insertion(array_aux, 1000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("insertion  1000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      print_array(array_aux, 1000);
       array_aux = copy_array(array_desordenado, 1000);
 
-      clock_t start = clock();
-      shellsort(int array_aux, 1000);
-      clock_t stop = clock();
-      double tempo_total = (double)(tempo_final - tempo_inicio) * 1000.0 / CLOCKS_PER_SEC;
-      printf("Tempo executado com shellsort com 1000 inteiros: %f", tempo_total);
-      tempo_total = 0, tempo_inicio = 0, tempo_final = 0;
-      array_aux = copy_array(array_desordenado, 1000);
-*/
   		return  0;
   	}
 
-  // ... depois de passar por todos os metodos
-  // trocar a entrada
 
   // pode testar tambem com entradas ordenadas
   // entradas invertidas que eh o pior caso.
@@ -92,8 +64,8 @@ void bubbleSort(int* array, int n){
    		}
 	}
 }
-/*
-int insertion(int array[], int n){
+
+void insertion(int* array, int n){
   int i, j, x;
   for(j = 1; j < n; j++){
     x = array[j];
@@ -103,7 +75,7 @@ int insertion(int array[], int n){
     array[i+1] = x;
   }
 }
-
+/*
 int mergeSort(int array[], int p, int r){
   if(p < r-1){
     int q = (p + r)/2;
@@ -132,7 +104,7 @@ void merge(int p, int q, int r, int array[]){
     array[i] = w[i-p];
   free(w);
 }
-
+/*
 int quickSort(int *array, int p, int r){
   int j;
   if(p < r){
@@ -185,20 +157,9 @@ int* read_array (const char* file_name) {
   int i = 0;
   static int vetor[1000];
 
-  for (i = 0; i < 1000; i++)
-    {
+  for (i = 0; i < 1000; i++){
         fscanf(file, "%d,", &vetor[i]);
-        printf("%d\n", vetor[i]);
-
-    }
-
-  /*fscanf(file, "%d", &i);
-  while (!feof (file) && m < 1000){
-      fscanf(file, "%d", &i);
-      //printf("%d\n", i);
-      vetor[m] = i;
-      m++;
-    }*/
+  }
   fclose (file);
   return vetor;
 }
