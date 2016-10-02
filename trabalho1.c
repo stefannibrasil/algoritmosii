@@ -10,6 +10,10 @@ int* copy_array(int*, int);
 void bubbleSort(int*, int);
 void insertion(int*, int);
 void print_array(int*, int);
+void MergeSort(int*, int);
+void quickSort(int*, int, int);
+void quickSortIterative (int*, int, int);
+void shellSort(int*, int);
 
 int main(char* argv) {
   // Teste  entrada com 1000 numeros desordenados
@@ -44,6 +48,47 @@ int main(char* argv) {
       print_array(array_aux, 1000);
       array_aux = copy_array(array_desordenado, 1000);
 
+      //merge com 1000 inteiros
+      start = clock();
+      MergeSort(array_aux, 1000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("merge  1000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      print_array(array_aux, 1000);
+      array_aux = copy_array(array_desordenado, 1000 );
+
+      //quick com 1000 inteiros
+      start = clock();
+      quickSort(array_aux, 0, 1000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("quicksort  1000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      print_array(array_aux, 1000);
+      array_aux = copy_array(array_desordenado, 1000 );
+
+      //quick iterativo com 1000 inteiros
+      start = clock();
+      quickSortIterative(array_aux, 0, 1000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("quicksort  iterativo 1000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      print_array(array_aux, 1000);
+      array_aux = copy_array(array_desordenado, 1000 );
+
+      //shellSort com 1000 inteiros
+      start = clock();
+      shellSort(array_aux, 1000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("shell sort 1000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      print_array(array_aux, 1000);
+      array_aux = copy_array(array_desordenado, 1000 );
+
+
   		return  0;
   	}
 
@@ -75,82 +120,174 @@ void insertion(int* array, int n){
     array[i+1] = x;
   }
 }
-/*
-int mergeSort(int array[], int p, int r){
-  if(p < r-1){
-    int q = (p + r)/2;
-    mergeSort(p, q, array);
-    mergeSort(q, r, array);
-    merge(p, q, r, array);
-  }
+
+void Merge(int *A, int *L,int leftCount,int *R,int rightCount) {
+	int i,j,k;
+
+	// i - to mark the index of left aubarray (L)
+	// j - to mark the index of right sub-raay (R)
+	// k - to mark the index of merged subarray (A)
+	i = 0; j = 0; k =0;
+
+	while(i<leftCount && j< rightCount) {
+		if(L[i]  < R[j]) A[k++] = L[i++];
+		else A[k++] = R[j++];
+	}
+	while(i < leftCount) A[k++] = L[i++];
+	while(j < rightCount) A[k++] = R[j++];
 }
 
-void merge(int p, int q, int r, int array[]){
-  int i, j, k, *w;
-  w = malloc((r-p) * sizeof(int));
-  i = p; j = q; k = 0;
-  while(i < q && j < r){
-    if (array[i] <= array[j])
-      w[k++] = array[i++];
-    else
-      w[k++] = array[j++];
-  }
-  while(i < q)
-    w[k++] = array[i++];
-  while(j < r)
-    w[k++] = array[j++];
+// Recursive function to sort an array of integers.
+void MergeSort(int *A,int n) {
+	int mid,i, *L, *R;
+	if(n < 2) return; // base condition. If the array has less than two element, do nothing.
 
-  for(i = p; i < r; i++)
-    array[i] = w[i-p];
-  free(w);
-}
-/*
-int quickSort(int *array, int p, int r){
-  int j;
-  if(p < r){
-    j = partition(p, r, array);
-    quickSort(p, j-1, array);
-    quickSort(j+1, r, array);
-  }
+	mid = n/2;  // find the mid index.
+
+	// create left and right subarrays
+	// mid elements (from index 0 till mid-1) should be part of left sub-array
+	// and (n-mid) elements (from mid to n-1) will be part of right sub-array
+	L = (int*)malloc(mid*sizeof(int));
+	R = (int*)malloc((n- mid)*sizeof(int));
+
+	for(i = 0;i<mid;i++) L[i] = A[i]; // creating left subarray
+	for(i = mid;i<n;i++) R[i-mid] = A[i]; // creating right subarray
+
+	MergeSort(L,mid);  // sorting the left subarray
+	MergeSort(R,n-mid);  // sorting the right subarray
+	Merge(A,L,mid,R,n-mid);  // Merging L and R into A as sorted list.
+  free(L);
+  free(R);
 }
 
-int partition(int p, int r, int array[]){
-  int c, j, k, t;
-  c = array[r]; j = p;
-  for(k = p; k < r; k++){
-    if(array[k] <= c){
-      t = array[j], array[j] = array[k], array[k] = t;
-      j++;
-    }
-    array[r] = array[j], array[j] = c;
-    return j;
-  }
-}
-
-/*
-void shellsort(int array[], int n) {
-  const int k = 2;
-  int i, j, h;
-  item x;
-  h = 1;
-  do {
-    h = k * h + 1;
-  } while (h <= N);
-  do
-  { h = h / k;
-    for (i = h + 1; i <= N; i++){
-      x = a[i];
-      j = i - h;
-      while (j >= 1 && x < a[j]){
-        a[j+h] = a[j];
-        j = j - h;
+void quickSort(int *arr, int low, int high)
+{
+  int pivot, i, j, temp;
+  if(low < high) {
+    pivot = low; // select a pivot element
+    i = low;
+    j = high;
+    while(i < j) {
+      // increment i till you get a number greater than the pivot element
+      while(arr[i] <= arr[pivot] && i <= high)
+        i++;
+      // decrement j till you get a number less than the pivot element
+      while(arr[j] > arr[pivot] && j >= low)
+        j--;
+      // if i < j swap the elements in locations i and j
+      if(i < j) {
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
       }
-      a[j+h] = x;
     }
-  } while (h != 1);
-}
-*/
 
+    // when i >= j it means the j-th position is the correct position
+    // of the pivot element, hence swap the pivot element with the
+    // element in the j-th position
+    temp = arr[j];
+    arr[j] = arr[pivot];
+    arr[pivot] = temp;
+    // Repeat quicksort for the two sub-arrays, one to the left of j
+    // and one to the right of j
+    quickSort(arr, low, j-1);
+    quickSort(arr, j+1, high);
+  }
+}
+
+void swap ( int* a, int* b )
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+/* This function is same in both iterative and recursive*/
+int partition (int arr[], int l, int h)
+{
+    int x = arr[h];
+    int i = (l - 1);
+
+    for (int j = l; j <= h- 1; j++)
+    {
+        if (arr[j] <= x)
+        {
+            i++;
+            swap (&arr[i], &arr[j]);
+        }
+    }
+    swap (&arr[i + 1], &arr[h]);
+    return (i + 1);
+}
+
+/* A[] --> Array to be sorted,
+   l  --> Starting index,
+   h  --> Ending index */
+void quickSortIterative (int arr[], int l, int h)
+{
+    // Create an auxiliary stack
+    int stack[ h - l + 1 ];
+
+    // initialize top of stack
+    int top = -1;
+
+    // push initial values of l and h to stack
+    stack[ ++top ] = l;
+    stack[ ++top ] = h;
+
+    // Keep popping from stack while is not empty
+    while ( top >= 0 )
+    {
+        // Pop h and l
+        h = stack[ top-- ];
+        l = stack[ top-- ];
+
+        // Set pivot element at its correct position
+        // in sorted array
+        int p = partition( arr, l, h );
+
+        // If there are elements on left side of pivot,
+        // then push left side to stack
+        if ( p-1 > l )
+        {
+            stack[ ++top ] = l;
+            stack[ ++top ] = p - 1;
+        }
+
+        // If there are elements on right side of pivot,
+        // then push right side to stack
+        if ( p+1 < h )
+        {
+            stack[ ++top ] = p + 1;
+            stack[ ++top ] = h;
+        }
+    }
+}
+
+void shellSort(int *Vetor, int tamanho)
+{
+   int i = (tamanho - 1) / 2;
+   int chave, k, aux;
+
+   while(i != 0)
+   {
+      do
+      {
+         chave = 1;
+         for(k = 0; k < tamanho - i; ++k)
+         {
+            if(Vetor[k] > Vetor[k + i])
+            {
+               aux = Vetor[k];
+               Vetor[k] = Vetor[k + i];
+               Vetor[k + i] = aux;
+               chave = 0;
+            }
+         }
+      }while(chave == 0);
+      i = i / 2;
+   }
+}
 
 int* read_array (const char* file_name) {
   FILE* file = fopen (file_name, "r");
