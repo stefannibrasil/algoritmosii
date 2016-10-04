@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <malloc.h>
 
 int* read_array (const char*);
 int* copy_array(int*, int);
@@ -16,17 +17,16 @@ void quickSortIterative (int*, int, int);
 void shellSort(int*, int);
 
 int main(char* argv) {
-  // Teste  entrada com 1000 numeros desordenados
   		int* array_desordenado;
       int* array_aux;
       double tempo_total, tempo_inicio, tempo_final = 0;
       int i = 0;
 
-      array_desordenado = read_array("1000.txt");
-      array_aux = copy_array(array_desordenado, 1000);
+      array_desordenado = read_array("1000000.txt");
+      array_aux = copy_array(array_desordenado, 1000000);
 
-      printf("algoritmo n tempo(ms)\n");
-
+      printf("Algoritmos 1000 tempo(ms)\n");
+/*
       //bubbleSort com 1000 inteiros
       clock_t start = clock();
       bubbleSort(array_aux, 1000);
@@ -34,7 +34,7 @@ int main(char* argv) {
       tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
       printf("bubbleSort  1000  %f\n", tempo_total);
       tempo_total = 0, start = 0, stop = 0;
-      print_array(array_aux, 1000);
+      //print_array(array_aux, 1000);
       array_aux = copy_array(array_desordenado, 1000);
 
 
@@ -45,7 +45,7 @@ int main(char* argv) {
       tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
       printf("insertion  1000  %f\n", tempo_total);
       tempo_total = 0, start = 0, stop = 0;
-      print_array(array_aux, 1000);
+    //  print_array(array_aux, 1000);
       array_aux = copy_array(array_desordenado, 1000);
 
       //merge com 1000 inteiros
@@ -55,8 +55,8 @@ int main(char* argv) {
       tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
       printf("merge  1000  %f\n", tempo_total);
       tempo_total = 0, start = 0, stop = 0;
-      print_array(array_aux, 1000);
-      array_aux = copy_array(array_desordenado, 1000 );
+    //  print_array(array_aux, 1000);
+      array_aux = copy_array(array_desordenado, 1000);
 
       //quick com 1000 inteiros
       start = clock();
@@ -65,8 +65,8 @@ int main(char* argv) {
       tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
       printf("quicksort  1000  %f\n", tempo_total);
       tempo_total = 0, start = 0, stop = 0;
-      print_array(array_aux, 1000);
-      array_aux = copy_array(array_desordenado, 1000 );
+  //    print_array(array_aux, 1000);
+      array_aux = copy_array(array_desordenado, 1000);
 
       //quick iterativo com 1000 inteiros
       start = clock();
@@ -75,8 +75,8 @@ int main(char* argv) {
       tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
       printf("quicksort  iterativo 1000  %f\n", tempo_total);
       tempo_total = 0, start = 0, stop = 0;
-      print_array(array_aux, 1000);
-      array_aux = copy_array(array_desordenado, 1000 );
+  //    print_array(array_aux, 1000);
+      array_aux = copy_array(array_desordenado, 1000);
 
       //shellSort com 1000 inteiros
       start = clock();
@@ -85,9 +85,210 @@ int main(char* argv) {
       tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
       printf("shell sort 1000  %f\n", tempo_total);
       tempo_total = 0, start = 0, stop = 0;
-      print_array(array_aux, 1000);
-      array_aux = copy_array(array_desordenado, 1000 );
+    //  print_array(array_aux, 1000);
+      array_aux = copy_array(array_desordenado, 1000);
 
+      printf("Algoritmos 10000 tempo(ms)\n");
+
+      array_desordenado = read_array("10000.txt");
+      array_aux = copy_array(array_desordenado, 10000);
+
+      //bubbleSort com 10000 inteiros
+      start = clock();
+      bubbleSort(array_aux, 10000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("bubbleSort  10000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      //print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 10000);
+
+
+      //insertion com 10000 inteiros
+      start = clock();
+      insertion(array_aux, 10000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("insertion  10000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+    //  print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 10000);
+
+      //merge com 10000 inteiros
+      start = clock();
+      MergeSort(array_aux, 10000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("merge  10000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+    //  print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 10000);
+
+      //quick com 10000 inteiros
+      start = clock();
+      quickSort(array_aux, 0, 10000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("quicksort  10000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+    //  print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 10000);
+
+      //quick iterativo com 10000 inteiros
+      start = clock();
+      quickSortIterative(array_aux, 0, 10000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("quicksort  iterativo 10000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+  //    print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 10000);
+
+      //shellSort com 10000 inteiros
+      start = clock();
+      shellSort(array_aux, 10000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("shell sort 10000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      //print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 10000);
+
+      printf("Algoritmos 100000 tempo(ms)\n");
+
+      //Métodos com 100000 inteiros
+      array_desordenado = read_array("100000.txt");
+      array_aux = copy_array(array_desordenado, 100000);
+
+      //merge com 100000 inteiros
+      start = clock();
+      MergeSort(array_aux, 100000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("merge  100000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+    //  print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 100000);
+
+      //quick com 100000 inteiros
+      start = clock();
+      quickSort(array_aux, 0, 100000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("quicksort  100000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+    //  print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 100000);
+
+      //quick iterativo com 100000 inteiros
+      start = clock();
+      quickSortIterative(array_aux, 0, 100000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("quicksort  iterativo 100000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+  //    print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 100000);
+
+      //shellSort com 100000 inteiros
+      start = clock();
+      shellSort(array_aux, 100000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("shell sort 1000000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      //print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 100000);
+
+      //bubbleSort com 100000 inteiros
+      start = clock();
+      bubbleSort(array_aux, 100000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("bubbleSort  100000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      //print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 100000);
+
+
+      //insertion com 100000 inteiros
+      start = clock();
+      insertion(array_aux, 100000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("insertion  100000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+    //  print_array(array_aux, 10000);
+      array_aux = copy_array(array_desordenado, 100000);
+*/
+  printf("Algoritmos 1000000 tempo(ms)\n");
+/*
+      //quick com 1000000 inteiros
+      clock_t start = clock();
+      quickSort(array_aux, 0, 1000000);
+      clock_t stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("quicksort  1000000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+    //  print_array(array_aux, 10000);
+      free(array_aux);
+      array_aux = copy_array(array_desordenado, 1000000);
+
+     //quick iterativo com 1000000 inteiros
+      start = clock();
+      quickSortIterative(array_aux, 0, 1000000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("quicksort  iterativo 1000000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+  //    print_array(array_aux, 10000);
+      free(array_aux);
+      array_aux = copy_array(array_desordenado, 1000000);
+
+      //shellSort com 1000000 inteiros
+      start = clock();
+      shellSort(array_aux, 1000000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("shell sort 1000000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      //print_array(array_aux, 10000);
+      free(array_aux);
+      array_aux = copy_array(array_desordenado, 1000000);
+
+      //merge com 1000000 inteiros
+      start = clock();
+      MergeSort(array_aux, 1000000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("merge  1000000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      //  print_array(array_aux, 10000);
+      free(array_aux);
+      array_aux = copy_array(array_desordenado, 1000000);
+
+      //bubbleSort com 1000000 inteiros
+      start = clock();
+      bubbleSort(array_aux, 1000000);
+      stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("bubbleSort  1000000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      //print_array(array_aux, 10000);
+      free(array_aux);
+      array_aux = copy_array(array_desordenado, 1000000);
+*/
+
+      //insertion com 1000000 inteiros
+      clock_t start = clock();
+      insertion(array_aux, 1000000);
+      clock_t stop = clock();
+      tempo_total = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+      printf("insertion  1000000  %f\n", tempo_total);
+      tempo_total = 0, start = 0, stop = 0;
+      //  print_array(array_aux, 10000);
+      free(array_aux);
+      array_aux = copy_array(array_desordenado, 1000000);
 
   		return  0;
   	}
@@ -195,7 +396,7 @@ void quickSort(int *arr, int low, int high)
   }
 }
 
-void swap ( int* a, int* b )
+void swap (int* a, int* b)
 {
     int t = *a;
     *a = *b;
@@ -292,9 +493,10 @@ void shellSort(int *Vetor, int tamanho)
 int* read_array (const char* file_name) {
   FILE* file = fopen (file_name, "r");
   int i = 0;
-  static int vetor[1000];
 
-  for (i = 0; i < 1000; i++){
+ int* vetor = (int*)malloc((1000000)*sizeof(int));
+
+  for (i = 0; i < 1000000; i++){
         fscanf(file, "%d,", &vetor[i]);
   }
   fclose (file);
@@ -303,12 +505,13 @@ int* read_array (const char* file_name) {
 
 int* copy_array(int* from, int n){
   int i = 0;
-  static int to[1000];
+
+  int* vetor = (int*)malloc((1000000)*sizeof(int));
 
   for(i; i < n; i++){
-    to[i] = from[i];
+    vetor[i] = from[i];
   }
-  return to;
+  return vetor;
 }
 
 void print_array(int* array, int n){
